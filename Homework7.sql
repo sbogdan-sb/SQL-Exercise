@@ -91,6 +91,11 @@ inner join inventory on film.film_id = inventory.film_id
 where lower(film.title) = 'hunchback impossible';
 
 -- 6e
+select cust.first_name, cust.last_name, sum(pay.amount) as 'Total Payments'
+from customer cust
+inner join payment pay on cust.customer_id = pay.customer_id
+group by cust.customer_id
+order by cust.last_name;
 
 
 
