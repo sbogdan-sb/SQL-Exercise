@@ -69,7 +69,6 @@ left join address ad
 on st.address_id = ad.address_id;
 
 -- 6b
-
 select st.first_name, st.last_name,  sum(py.amount)
 from payment py 
 left join staff st
@@ -97,5 +96,58 @@ inner join payment pay on cust.customer_id = pay.customer_id
 group by cust.customer_id
 order by cust.last_name;
 
+-- 7a 
+SELECT 
+    title
+FROM
+    film
+WHERE
+    LOWER(title) LIKE 'k%'
+        OR LOWER(title) LIKE 'q%'
+        AND language_id = (SELECT 
+            language_id
+        FROM
+            language
+        WHERE
+            LOWER(name) = 'english');
 
-
+-- 7b
+SELECT 
+    first_name, last_name
+FROM
+    actor
+WHERE
+    actor_id IN (SELECT 
+            actor_id
+        FROM
+            film_actor
+        WHERE
+            film_id = (SELECT 
+                    film_id
+                FROM
+                    film
+                WHERE
+                    LOWER(title) = 'alone trip'));
+                    
+-- 7c 
+ SELECT 
+    c.first_name, c.last_name, c.email
+FROM
+    customer c
+        INNER JOIN
+    address a ON c.address_id = a.address_id
+        INNER JOIN
+    city ON a.city_id = city.city_id
+        INNER JOIN
+    country ON city.country_id = country.country_id
+WHERE
+    LOWER(country.country) = 'canada';
+ 
+ -- 7d
+ SELECT 
+    title, rating
+FROM
+    film
+WHERE
+    rating IN ('G' , 'PG', 'PG-13');
+ 
